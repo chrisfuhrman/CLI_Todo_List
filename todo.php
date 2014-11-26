@@ -1,14 +1,18 @@
 <?php
 
 // Create array to hold list of todo items
-$items = array();
-
+$items = [];
+// $items[0] = 0;
 // The loop!
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
         // Display each item and a newline
+       //The $key++ alters how the program dispalys the elements index
+        $key++;
+        // if ($item != 0) {
         echo "[{$key}] {$item}\n";
+         // }
     }
 
     // Show the menu options
@@ -29,6 +33,8 @@ do {
         echo 'Enter item number to remove: ';
         // Get array key
         $key = trim(fgets(STDIN));
+        //The $key-- brings the index value back to the actual index value
+        $key--;
         // Remove from array
         unset($items[$key]);
     }
