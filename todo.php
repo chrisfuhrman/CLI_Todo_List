@@ -2,15 +2,14 @@
 
 // Create array to hold list of todo items
 $items = [];
-// $items[0] = 0;
 // The loop!
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
-        // Display each item and a newline
        //The $key++ alters how the program dispalys the elements index
         $key++;
-        // if ($item != 0) {
+        
+        // Display each item and a newline
         echo "[{$key}] {$item}\n";
          // }
     }
@@ -21,14 +20,15 @@ do {
     // Get the input from user
     // Use trim() to remove whitespace and newlines
     $input = trim(fgets(STDIN));
+    $input = strtoupper($input);
 
     // Check for actionable input
-    if ($input == 'N' || $input == 'n') {
+    if ($input == 'N') {
         // Ask for entry
         echo 'Enter item: ';
         // Add entry to list array
         $items[] = trim(fgets(STDIN));
-    } elseif ($input == 'R' || $input == 'r') {
+    } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
         // Get array key
@@ -37,9 +37,11 @@ do {
         $key--;
         // Remove from array
         unset($items[$key]);
+        // reindex numerical array
+        $items = array_values($items);
     }
 // Exit when input is (Q)uit
-} while ($input != 'Q' && $input != 'q');
+} while ($input != 'Q');
 
 // Say Goodbye!
 echo "Goodbye!\n";
