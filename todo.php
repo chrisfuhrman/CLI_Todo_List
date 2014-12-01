@@ -2,37 +2,51 @@
 
 // Create array to hold list of todo items
 $items = [];
+
+//List array items formatted for CLI
+function listItems($list) {
+
+    $listString = "";
+
+    foreach ($list as $key => $item) {
+        $key++;
+        $listString .= "[{$key}] {$item}\n";
+    }
+    return $listString;
+}
+
+//Function for trimming user input and making input uppercase if needed
+function getInput($upper = false) {
+    $input = trim(fgets(STDIN));
+    if ($upper) {
+    
+        $input = strtoupper($input);
+    }
+    return $input;
+}
+
 // The loop!
 do {
-    // Iterate through list items
-    foreach ($items as $key => $item) {
-       //The $key++ alters how the program dispalys the elements index
-        $key++;
-        
-        // Display each item and a newline
-        echo "[{$key}] {$item}\n";
-         // }
-    }
+        echo listItems($items);
 
     // Show the menu options
     echo '(N)ew item, (R)emove item, (Q)uit : ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
-    $input = trim(fgets(STDIN));
-    $input = strtoupper($input);
+    $input = getInput(true);
 
     // Check for actionable input
     if ($input == 'N') {
         // Ask for entry
         echo 'Enter item: ';
         // Add entry to list array
-        $items[] = trim(fgets(STDIN));
+        $items[] = getInput();
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
         // Get array key
-        $key = trim(fgets(STDIN));
+        $key = getInput();
         //The $key-- brings the index value back to the actual index value
         $key--;
         // Remove from array
