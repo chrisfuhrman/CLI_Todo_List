@@ -19,10 +19,20 @@ function listItems($list) {
 function getInput($upper = false) {
     $input = trim(fgets(STDIN));
     if ($upper) {
-    
         $input = strtoupper($input);
     }
     return $input;
+}
+
+//Function to sort menu
+function sortMenu($items) {
+$sortBy = getInput(true);
+    if ($sortBy == 'A') {
+        sort($items);
+    } elseif ($sortBy == 'Z') {
+        rsort($items);
+    }
+    return $items;
 }
 
 // The loop!
@@ -30,7 +40,7 @@ do {
         echo listItems($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (Q)uit, (S)ort: ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -53,7 +63,15 @@ do {
         unset($items[$key]);
         // reindex numerical array
         $items = array_values($items);
+    } elseif ($input == 'S') {
+        // Remove which item?
+        echo 'Would you like to order these from (A) - Z or from (Z) - A: ';
+        // Get array key
+        $items = sortMenu($items);
     }
+
+
+
 // Exit when input is (Q)uit
 } while ($input != 'Q');
 
