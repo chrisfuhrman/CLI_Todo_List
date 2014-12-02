@@ -26,7 +26,7 @@ function getInput($upper = false) {
 
 //Function to sort menu
 function sortMenu($items) {
-$sortBy = getInput(true);
+    $sortBy = getInput(true);
     if ($sortBy == 'A') {
         sort($items);
     } elseif ($sortBy == 'Z') {
@@ -35,9 +35,38 @@ $sortBy = getInput(true);
     return $items;
 }
 
+//Function to add new item to the end or beginning of the list depending on user choice
+function itemPlacement($items, $item) {
+    $placement = getInput(true);
+
+    if ($placement == 'B') {
+        //add new item to beginning of list
+        array_unshift($items, $item);
+   //add item to end of list if 'B' is not selected
+    } else {
+        array_push($items, $item);
+    }
+    return $items;
+}
+
+//Function to remove the first item from the list
+function removeFirst($items) {
+    array_shift($items);
+    return $items;
+}
+
+//Function to remove the last item from the list
+function removeLast($items) {
+    array_pop($items);
+    return $items;
+}
+
+
+
 // The loop!
 do {
-        echo listItems($items);
+    
+    echo listItems($items);
 
     // Show the menu options
     echo '(N)ew item, (R)emove item, (Q)uit, (S)ort: ';
@@ -50,8 +79,11 @@ do {
     if ($input == 'N') {
         // Ask for entry
         echo 'Enter item: ';
-        // Add entry to list array
-        $items[] = getInput();
+        //assign new item to $item to use in itemPlacement function
+        $item = getInput();
+        echo 'Would you like to add this item to the (B)eginning or the (E)nd of the list? ';
+        //overwrite the array with the additional variables
+        $items = itemPlacement($items, $item);
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
@@ -68,6 +100,12 @@ do {
         echo 'Would you like to order these from (A) - Z or from (Z) - A: ';
         // Get array key
         $items = sortMenu($items);
+    } elseif ($input == 'F') {
+        // removes the first item on the list when the 'F' key is hit. hidden feature
+         $items = removeFirst($items);
+    } elseif ($input == 'L') {
+        // removes the last item on the list when the 'L' key is hit. hidden feature
+        $items = removeLast($items);
     }
 
 
