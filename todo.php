@@ -69,7 +69,7 @@ do {
     echo listItems($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit, (S)ort: ';
+    echo '(N)ew item, (R)emove item, (Q)uit, (S)ort, (O)pen: ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -107,7 +107,16 @@ do {
         // removes the last item on the list when the 'L' key is hit. hidden feature
         $items = removeLast($items);
     }
+    elseif ($input = 'O') {
+        echo 'Please enter filename: ';
+        $filename = getInput();
+        $handle = fopen($filename, 'r');
 
+        if (filesize($filename) > 0) {
+            $contents = fread($handle, filesize($filename));
+            fclose($handle);
+        }
+    }
 
 
 // Exit when input is (Q)uit
