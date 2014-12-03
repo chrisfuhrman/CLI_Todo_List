@@ -17,7 +17,9 @@ function listItems($list) {
 
 //Function for trimming user input and making input uppercase if needed
 function getInput($upper = false) {
+
     $input = trim(fgets(STDIN));
+
     if ($upper) {
         $input = strtoupper($input);
     }
@@ -26,7 +28,9 @@ function getInput($upper = false) {
 
 //Function to sort menu
 function sortMenu($items) {
+
     $sortBy = getInput(true);
+
     if ($sortBy == 'A') {
         sort($items);
     } elseif ($sortBy == 'Z') {
@@ -37,6 +41,7 @@ function sortMenu($items) {
 
 //Function to add new item to the end or beginning of the list depending on user choice
 function itemPlacement($items, $item) {
+
     $placement = getInput(true);
 
     if ($placement == 'B') {
@@ -46,22 +51,28 @@ function itemPlacement($items, $item) {
     } else {
         array_push($items, $item);
     }
+
     return $items;
 }
 
 //Function to remove the first item from the list
 function removeFirst($items) {
+
     array_shift($items);
+
     return $items;
 }
 
 //Function to remove the last item from the list
 function removeLast($items) {
+
     array_pop($items);
+
     return $items;
 }
 //function to open a file, read it, and turn contents into an array
 function readList($filename) {
+
     $handle = fopen($filename, 'r');
 
     if (filesize($filename) > 0) {
@@ -72,6 +83,7 @@ function readList($filename) {
     }
     
     fclose($handle); 
+
     return $contentsArray;
 }
 
@@ -123,8 +135,9 @@ do {
     elseif ($input = 'O') {
         echo 'Please enter filename: ';
         $filename = getInput();
-
+        //calling function to open file, read, and turn list into array
         $contentsArray = readList($filename);
+        //merge array from inputed file with existing list
         $items = array_merge($contentsArray, $items); 
     }
 
