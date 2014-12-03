@@ -60,7 +60,20 @@ function removeLast($items) {
     array_pop($items);
     return $items;
 }
+//function to open a file, read it, and turn contents into an array
+function readList($filename) {
+    $handle = fopen($filename, 'r');
 
+    if (filesize($filename) > 0) {
+        $contents = fread($handle, filesize($filename));
+        $contentsArray = explode(PHP_EOL, $contents);
+    } else {
+        $contentsArray = [];
+    }
+    
+    fclose($handle); 
+    return $contentsArray;
+}
 
 
 // The loop!
@@ -110,14 +123,10 @@ do {
     elseif ($input = 'O') {
         echo 'Please enter filename: ';
         $filename = getInput();
-        $handle = fopen($filename, 'r');
 
-        if (filesize($filename) > 0) {
-            $contents = fread($handle, filesize($filename));
-            fclose($handle);
-        }
+        $contentsArray = readList($filename);
+        $items = array_merge($contentsArray, $items); 
     }
-
 
 // Exit when input is (Q)uit
 } while ($input != 'Q');
