@@ -77,7 +77,7 @@ function readList($filename) {
 
     if (filesize($filename) > 0) {
         $contents = fread($handle, filesize($filename));
-        $contentsArray = explode(PHP_EOL, $contents);
+        $contentsArray = explode(PHP_EOL, trim($contents));
     } else {
         $contentsArray = [];
     }
