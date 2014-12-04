@@ -87,6 +87,19 @@ function readList($filename) {
     return $contentsArray;
 }
 
+//Function to save todo list to a file
+function saveFile($filename, $items) {
+
+    $handle = fopen($filename, 'w');
+
+    foreach ($items as $task) {
+        fwrite($handle, $task . PHP_EOL);
+        echo 'You successfully saved your file!' . PHP_EOL;
+    }
+    
+    fclose($handle);
+}
+
 
 // The loop!
 do {
@@ -94,7 +107,7 @@ do {
     echo listItems($items);
 
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit, (S)ort, (O)pen: ';
+    echo '(N)ew item, (R)emove item, (S)ort, (O)pen, s(A)ve, (Q)uit: ';
 
     // Get the input from user
     // Use trim() to remove whitespace and newlines
@@ -131,14 +144,30 @@ do {
     } elseif ($input == 'L') {
         // removes the last item on the list when the 'L' key is hit. hidden feature
         $items = removeLast($items);
-    }
-    elseif ($input = 'O') {
+    } elseif ($input == 'O') {
         echo 'Please enter filename: ';
         $filename = getInput();
         //calling function to open file, read, and turn list into array
         $contentsArray = readList($filename);
         //merge array from inputed file with existing list
         $items = array_merge($contentsArray, $items); 
+
+    // 'A' allows user to save file
+    } elseif ($input == 'A') {
+        echo 'Please enter filename: ';
+        $filename = getInput();
+        //check to see if file already exists and ask for user confirmation
+        if (file_exists($filename)) {
+            echo "WARNING, this file already exists!\nAre you sure you want to proceed with overwriting this file? (Y) / (N)" . PHP_EOL;
+            $input = getInput(true);
+            //if user confirms to overwrite file, proceed with saveFile function
+            if ($input == 'Y') {
+                    saveFile($filename, $items);
+            }
+        //if file does not exist, create a new file and save contents via saveFile function
+        } else {
+            saveFile($filename, $items);
+            }
     }
 
 // Exit when input is (Q)uit
